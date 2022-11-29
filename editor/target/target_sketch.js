@@ -1092,7 +1092,7 @@ def balao(ox,oy,w,h=None,
  h = h or text_width('nn') * (1 + texto_formatado.count(char(10)))
  wbase = w / 4
  offset = w / 4
- if mode == CENTER:
+ if mode == _P5_INSTANCE.CENTER:
   x,y = ox - w / 2.0,oy - h / 2.0
  else:
   x,y = ox,oy
