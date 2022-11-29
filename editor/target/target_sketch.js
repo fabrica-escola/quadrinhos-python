@@ -1083,13 +1083,13 @@ push_style = push
 ### extra functions for comics (quadrinhos)
 
 def balao(ox,oy,w,h=None,
- texto='',
+ texto="",
  ponta=None,
  mode=CENTER,
  flip_h=False,
  flip_v=False):
  texto_formatado = quebra_frase(texto,w - 10)
- h = h or TEXT_SIZE * (1 + texto_formatado.count('\n'))
+ h = h or TEXT_SIZE * (1 + texto_formatado.count("\n"))
  wbase = w / 4
  offset = w / 4
  if mode == CENTER:
