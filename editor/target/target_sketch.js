@@ -1089,7 +1089,7 @@ def balao(ox,oy,w,h=None,
  flip_h=False,
  flip_v=False):
  texto_formatado = quebra_frase(texto,w - 10)
- h = h or TEXT_SIZE * (1 + texto_formatado.count("\n"))
+ h = h or TEXT_SIZE * (1 + texto_formatado.count(chr(10)))
  wbase = w / 4
  offset = w / 4
  if mode == CENTER:
@@ -1123,10 +1123,10 @@ def quebra_frase(frase,largura):
  for letra in frase:
   parcial += letra
   if text_width(parcial) > largura:
-   ultimo_espaco = parcial.rfind(' ')
-   resultado += '\n' + parcial[:ultimo_espaco]
+   ultimo_espaco = parcial.rfind(" ")
+   resultado += chr(10) + parcial[:ultimo_espaco]
    parcial = parcial[ultimo_espaco + 1:]
- resultado += '\n' + parcial
+ resultado += chr(10) + parcial
  return resultado
  
 def draw_poly(pts,closed=True):
@@ -1142,19 +1142,19 @@ def quadro(x,y,w=None,h=None,margem=10,**kwargs):
  w = w or width / 3
  h = h or height
  rect(x + margem,y + margem,w - 2 * margem,h - 2 * margem)
- if img_fundo := imagens.get(kwargs.get('fundo')):
+ if img_fundo := imagens.get(kwargs.get("fundo")):
   image(
    img_fundo,
    x + margem,
    y + margem,
    w - 2 * margem,
    h - 2 * margem)
- if p1 := imagens.get(kwargs.get('p1')):
+ if p1 := imagens.get(kwargs.get("p1")):
   image(p1,margem + x,y,w / 4,h)
- if p2 := imagens.get(kwargs.get('p2')):
+ if p2 := imagens.get(kwargs.get("p2")):
   image(p2,x + 3 * w / 4 - margem,y,w / 4,h)
  
- if top_left := kwargs.get('top_left'):
+ if top_left := kwargs.get("top_left"):
   balao(
    margem + x + w / 3,margem + y + w / 2,
    w / 4, # h,
@@ -1162,7 +1162,7 @@ def quadro(x,y,w=None,h=None,margem=10,**kwargs):
    flip_h=True,
    flip_v=False,
   )
- if bottom_left := kwargs.get('bottom_left'):
+ if bottom_left := kwargs.get("bottom_left"):
   balao(
    margem + x + w / 3,margem + y + w / 2 + w / 4,
    w / 4,
@@ -1170,7 +1170,7 @@ def quadro(x,y,w=None,h=None,margem=10,**kwargs):
    flip_h=True,
    flip_v=True,
   )
- if top_right := kwargs.get('top_right'):
+ if top_right := kwargs.get("top_right"):
   balao(
    x + w - (margem + w / 3),margem + y + w / 2,
    w / 4, # h,
@@ -1178,7 +1178,7 @@ def quadro(x,y,w=None,h=None,margem=10,**kwargs):
    flip_h=False,
    flip_v=False,
   )
- if bottom_right := kwargs.get('bottom_right'):
+ if bottom_right := kwargs.get("bottom_right"):
   balao(
    x + w - (margem + w / 3), margem + y + w / 2 + w / 4,
    w / 4,
