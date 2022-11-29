@@ -1139,8 +1139,8 @@ def draw_poly(pts,closed=True):
   end_shape()
  
 def quadro(x,y,w=None,h=None,margem=10,**kwargs):
- w = w or p5_instance.width / 3
- h = h or p5_instance.height
+ w = w or _P5_INSTANCE.width / 3
+ h = h or _P5_INSTANCE.height
  rect(x + margem,y + margem,w - 2 * margem,h - 2 * margem)
  if img_fundo := imagens.get(kwargs.get("fundo")):
   image(
