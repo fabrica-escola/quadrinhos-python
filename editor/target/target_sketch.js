@@ -1082,111 +1082,109 @@ push_style = push
 
 ### extra functions for comics (quadrinhos)
 
-def balao(ox,oy,w,h=None,
- texto='',
- ponta=None,
- mode='center',
- flip_h=False,
- flip_v=False):
- texto_formatado = quebra_frase(texto,w - 10)
- h = h or text_width('nn') * (1 + texto_formatado.count(char(10)))
- wbase = w / 4
- offset = w / 4
- if mode == 'center':
-  x,y = ox - w / 2.0,oy - h / 2.0
- else:
-  x,y = ox,oy
- px,py = ponta or x + w,y + h * 1.5
- push()
- translate(ox,oy)
- if flip_v:
-  scale(1,-1)
- if flip_h:
-  scale(-1,1)
- pts = [(x - ox,y - oy),(x + w - ox,y - oy),
-  (x + w - ox,y + h - oy),
-  (offset + x + w / 2 + wbase / 2 - ox,y + h - oy),
-  (px - ox,py - oy), # (x + w / 2,y + h),
-  (offset + x + w / 2 - wbase / 2 - ox,y + h - oy),
-  (x - ox,y + h - oy)]
- draw_poly(pts)
- pop()
- push()
- fill(0)
- text(texto_formatado,x + 5,y + 5)
- pop()
-  
- 
-def quebra_frase(frase,largura):
- resultado = ""
- parcial = ""
- for letra in frase:
-  parcial += letra
-  if text_width(parcial) > largura:
-   ultimo_espaco = parcial.rfind(" ")
-   resultado += chr(10) + parcial[:ultimo_espaco]
-   parcial = parcial[ultimo_espaco + 1:]
- resultado += chr(10) + parcial
- return resultado
- 
-def draw_poly(pts,closed=True):
- begin_shape()
- for x,y in pts:
-  vertex(x,y)
- if closed:
-  end_shape(CLOSE)
- else:
-  end_shape()
- 
-def quadro(x,y,w=None,h=None,margem=10,**kwargs):
- w = w or _P5_INSTANCE.width / 3
- h = h or _P5_INSTANCE.height
- rect(x + margem,y + margem,w - 2 * margem,h - 2 * margem)
- if img_fundo := imagens.get(kwargs.get("fundo")):
-  image(
-   img_fundo,
-   x + margem,
-   y + margem,
-   w - 2 * margem,
-   h - 2 * margem)
- if p1 := imagens.get(kwargs.get("p1")):
-  image(p1,margem + x,y,w / 4,h)
- if p2 := imagens.get(kwargs.get("p2")):
-  image(p2,x + 3 * w / 4 - margem,y,w / 4,h)
- 
- if top_left := kwargs.get("top_left"):
-  balao(
-   margem + x + w / 3,margem + y + w / 2,
-   w / 4, # h,
-   texto=top_left,
-   flip_h=True,
-   flip_v=False,
-  )
- if bottom_left := kwargs.get("bottom_left"):
-  balao(
-   margem + x + w / 3,margem + y + w / 2 + w / 4,
-   w / 4,
-   texto=bottom_left,
-   flip_h=True,
-   flip_v=True,
-  )
- if top_right := kwargs.get("top_right"):
-  balao(
-   x + w - (margem + w / 3),margem + y + w / 2,
-   w / 4, # h,
-   texto=top_right,
-   flip_h=False,
-   flip_v=False,
-  )
- if bottom_right := kwargs.get("bottom_right"):
-  balao(
-   x + w - (margem + w / 3), margem + y + w / 2 + w / 4,
-   w / 4,
-   texto=bottom_right,
-   flip_h=False,
-   flip_v=True,
-  )
- 
+def balao(ox, oy, w, h=None,
+          texto="", ponta=None, mode="center",
+          flip_h=False, flip_v=False):
+    texto_formatado = quebra_frase(texto, w - 10)
+    h = h or text_width("nn") * (1 + texto_formatado.count(char(10)))
+    wbase = w / 4
+    offset = w / 4
+    if mode == "center":
+        x, y = ox - w / 2.0, oy - h / 2.0
+    else:
+        x, y = ox, oy
+    px, py = ponta or x + w, y + h * 1.5
+    push()
+    translate(ox, oy)
+    if flip_v:
+        scale(1, -1)
+    if flip_h:
+        scale(-1, 1)
+    pts = [
+        (x - ox, y - oy),
+        (x + w - ox, y - oy),
+        (x + w - ox, y + h - oy),
+        (offset + x + w / 2 + wbase / 2 - ox, y + h - oy),
+        (px - ox, py - oy),  # (x + w / 2,y + h),
+        (offset + x + w / 2 - wbase / 2 - ox, y + h - oy),
+        (x - ox, y + h - oy),
+    ]
+    draw_poly(pts)
+    pop()
+    push()
+    fill(0)
+    text(texto_formatado, x + 5, y + 5)
+    pop()
+
+def quebra_frase(frase, largura):
+    resultado = ""
+    parcial = ""
+    for letra in frase:
+        parcial += letra
+        if text_width(parcial) > largura:
+            ultimo_espaco = parcial.rfind(" ")
+            resultado += char(10) + parcial[:ultimo_espaco]
+            parcial = parcial[ultimo_espaco + 1 :]
+    resultado += char(10) + parcial
+    return resultado
+
+def draw_poly(pts, closed=True):
+    begin_shape()
+    for x, y in pts:
+        vertex(x, y)
+    if closed:
+        end_shape(CLOSE)
+    else:
+        end_shape()
+
+def quadro(x, y, w=None, h=None, margem=10, **kwargs):
+    w = w or 500
+    h = h or 500
+    rect(x + margem, y + margem, w - 2 * margem, h - 2 * margem)
+    if img_fundo := imagens.get(kwargs.get("fundo")):
+        image(img_fundo, x + margem, y + margem, w - 2 * margem, h - 2 * margem)
+    if p1 := imagens.get(kwargs.get("p1")):
+        image(p1, margem + x, y, w / 4, h)
+    if p2 := imagens.get(kwargs.get("p2")):
+        image(p2, x + 3 * w / 4 - margem, y, w / 4, h)
+
+    if top_left := kwargs.get("top_left"):
+        balao(
+            margem + x + w / 3,
+            margem + y + h / 2 - h / 4,
+            w / 4,  # h,
+            texto=top_left,
+            flip_h=True,
+            flip_v=False,
+        )
+    if bottom_left := kwargs.get("bottom_left"):
+        balao(
+            margem + x + w / 3,
+            margem + y + h / 2 + h / 4,
+            w / 4,
+            texto=bottom_left,
+            flip_h=True,
+            flip_v=True,
+        )
+    if top_right := kwargs.get("top_right"):
+        balao(
+            x + w - (margem + w / 3),
+            margem + y + h / 2 - h / 4,
+            w / 4,  # h,
+            texto=top_right,
+            flip_h=False,
+            flip_v=False,
+        )
+    if bottom_right := kwargs.get("bottom_right"):
+        balao(
+            x + w - (margem + w / 3),
+            margem + y + h / 2 + h / 4,
+            w / 4,
+            texto=bottom_right,
+            flip_h=False,
+            flip_v=True,
+        )
+
 ###
 
 # PVector is a wrapper/helper class for p5.Vector objets
