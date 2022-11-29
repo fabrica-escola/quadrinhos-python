@@ -1085,14 +1085,14 @@ push_style = push
 def balao(ox,oy,w,h=None,
  texto='',
  ponta=None,
- mode=_P5_INSTANCE.CENTER,
+ mode='center',
  flip_h=False,
  flip_v=False):
  texto_formatado = quebra_frase(texto,w - 10)
  h = h or text_width('nn') * (1 + texto_formatado.count(char(10)))
  wbase = w / 4
  offset = w / 4
- if mode == _P5_INSTANCE.CENTER:
+ if mode == 'center':
   x,y = ox - w / 2.0,oy - h / 2.0
  else:
   x,y = ox,oy
